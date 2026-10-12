@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Open Space Inc.</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{--bg:#d9dee2;--line:#c9d0d6;--panel:#fff;--ink:#1e2b3a;--mute:#52626f;--bd:#b8c2ca;--accent:#2f6f7a;--manila:#e6be73;--manila2:#d3a64f;--post:#ffe066;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b232b;--line:#25303a;--panel:#26313b;--ink:#e8eef3;--mute:#a3b3c1;--bd:#3a4855;--accent:#6fc3d0}}
+:root[data-theme="dark"]{--bg:#1b232b;--line:#25303a;--panel:#26313b;--ink:#e8eef3;--mute:#a3b3c1;--bd:#3a4855;--accent:#6fc3d0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
+body{margin:0;background-color:var(--bg);background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;color:var(--ink);font:16px/1.45 "Atkinson Hyperlegible",system-ui,sans-serif}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:16px;display:grid;gap:16px;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);align-items:start}
+@media(max-width:760px){.wrap{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--panel);border:2px solid var(--bd);border-radius:10px;padding:18px}
+.desk{position:relative;text-align:center}
+h1,h2,.count strong,.folder,.own{font-family:"Bricolage Grotesque","Trebuchet MS",sans-serif}
+h1{margin:0;font-size:30px;font-weight:800;letter-spacing:-.02em}
+h2{margin:0 0 8px;font-size:20px;font-weight:800}
+.sub{margin:4px 0 14px;color:var(--mute)}
+.count strong{display:block;font-size:clamp(38px,9vw,56px);line-height:1.05;font-weight:800;overflow-wrap:anywhere}
+.count span,.rate{color:var(--mute)}
+.rate{margin:2px 0 0}
+#bo{font-weight:700;color:var(--accent)}
+.folder{display:block;width:min(100%,290px);aspect-ratio:4/3;margin:34px auto 18px;border:0;border-radius:6px 14px 14px 14px;background:var(--manila);box-shadow:inset 0 -10px 0 var(--manila2),0 6px 0 #a5802f;position:relative;color:#3a2a08;font-size:21px;font-weight:800;cursor:pointer;transition:transform .06s;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none}
+.folder::before{content:"";position:absolute;left:0;top:-15px;width:42%;height:17px;background:var(--manila);border-radius:8px 8px 0 0}
+.folder:active{transform:translateY(5px);box-shadow:inset 0 -10px 0 var(--manila2),0 1px 0 #a5802f}
+.meta{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin:0 0 12px;color:var(--mute);font-size:15px}
+.meta b{color:var(--ink)}
+.note{margin:0 0 12px;text-align:left;border-left:4px solid var(--accent);padding:4px 10px;color:var(--mute);min-height:3em}
+.evt{position:absolute;z-index:3;background:var(--post);color:#2a2410;border:0;border-radius:4px;padding:10px 14px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.28);transform:rotate(-4deg);animation:wig 1.4s ease-in-out infinite}
+@keyframes wig{50%{transform:rotate(4deg) scale(1.06)}}
+.reset{background:none;border:0;color:var(--mute);text-decoration:underline;cursor:pointer;padding:4px}
+.foot{font-size:14px;color:var(--mute);margin:0}
+#ups{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:22px}
+.empty{grid-column:1/-1;margin:0;color:var(--mute)}
+.up{display:grid;gap:2px;text-align:left;background:var(--post);color:#2a2410;border:0;border-radius:4px;padding:9px 10px;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.25)}
+.up small{font-size:13px}
+.up span{font-weight:700}
+.up:disabled{background:var(--panel);color:var(--ink);border:2px dashed var(--bd);box-shadow:none;opacity:.7;cursor:not-allowed}
+.row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:10px 6px;cursor:pointer}
+.row:hover:not(:disabled){background:var(--line)}
+.row:disabled{opacity:.6;cursor:not-allowed}
+.row .n{display:grid;font-weight:700}
+.row small{font-weight:400;color:var(--mute)}
+.row .c{text-align:right;display:grid}
+.own{font-size:24px;font-weight:800;line-height:1}
+.cost{font-size:14px;color:var(--mute)}
+.fl{position:fixed;pointer-events:none;z-index:9;font:800 20px "Bricolage Grotesque",sans-serif;color:var(--ink);text-shadow:0 0 5px var(--panel),0 0 5px var(--panel);transform:translate(-50%,-50%);animation:fly .9s ease-out forwards}
+@keyframes fly{to{transform:translate(-50%,-90px);opacity:0}}
+@media(prefers-reduced-motion:reduce){.fl,.evt{animation:none}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="panel desk" id="desk">
+    <h1>Open Space Inc.</h1>
+    <p class="sub">Traitez des dossiers, embauchez, survivez à la clim.</p>
+    <div class="count"><strong id="d">0</strong><span>dossiers traités</span></div>
+    <p class="rate"><span id="r">0</span> par seconde<span id="bo" hidden></span></p>
+    <button id="clk" class="folder">Traiter un dossier</button>
+    <button id="evt" class="evt" hidden>Réunion annulée !</button>
+    <p class="meta"><span>Par clic : <b id="pc">1</b></span><span>Total traité : <b id="tt">0</b></span></p>
+    <p class="note" id="tk">Lundi, 9 h 02. La machine à café fonctionne encore.</p>
+    <p class="foot">Sauvegarde automatique dans votre navigateur. <button id="rs" class="reset">Recommencer à zéro</button></p>
+  </section>
+  <section class="panel">
+    <h2>Améliorations</h2>
+    <div id="ups"></div>
+    <h2>Équipe</h2>
+    <div id="shop"></div>
+  </section>
+</main>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const B=[
+["Stagiaire",15,.1,"Fait ce qu'on lui demande, parfois même bien."],
+["Assistant(e)",100,1,"Sait où est tout. Absolument tout."],
+["Chargé de compte",1100,8,"Transforme un mail en rendez-vous."],
+["Machine à café",12000,47,"Carburant officiel de l'open space."],
+["Chef de projet",130000,260,"Planifie la réunion qui prépare la réunion."],
+["Consultant externe",1400000,1400,"Facture au TJM, livre en slides."],
+["Direction",20000000,7800,"Valide à 17 h 59, un vendredi."],
+["Siège social",330000000,44000,"Trois étages et un baby-foot."]];
+const UN=[["Tutoriel de 3 pages","Badge « presque salarié »"],["Agenda partagé","Raccourci Ctrl+Entrée"],["CRM mis à jour","Déjeuner client"],["Dosette premium","Lait d'avoine"],["Rétroplanning","Post-it sur tous les murs"],["Slides de 400 pages","Facture en TJM"],["Séminaire à Marrakech","Le mot « synergie »"],["Tour de verre","Baby-foot à étage"]];
+const U=[];
+["Souris ergonomique","Deuxième écran","Raccourcis clavier","Casque anti-bruit","Chaise ergonomique"].forEach((n,k)=>U.push({id:"c"+k,n,t:"c",cost:100*10**k,d:"Clics ×2"}));
+B.forEach((b,i)=>[[5,10],[25,1500]].forEach(([req,m],k)=>U.push({id:"b"+i+"_"+k,n:UN[i][k],t:"b",i,req,cost:b[1]*m,d:b[0]+" ×2"})));
+const M=["Quelqu'un a encore réchauffé du poisson au micro-ondes.","« On fait un point rapide ? » Il dure 55 minutes.","L'imprimante est en panne. Ce n'est pas nouveau.","Le baby-foot n'a pas servi depuis la dernière réorganisation.","Un collègue répond « à tous » pour dire merci.","Il reste un seul post-it. Personne ne veut le prendre.","La clim est trop froide. Ou trop chaude. Jamais entre les deux.","Cette réunion aurait pu être un mail. Elle l'est devenue.","Quelqu'un a posé son sac sur la chaise d'à côté.","Le Wi-Fi tient bon. Pour l'instant.","Ordre du jour : l'ordre du jour.","Le café est fini. Le dernier n'a pas relancé la machine."];
+const KEY="openspace-inc-v1";
+let s={d:0,tot:0,clicks:0,b:B.map(()=>0),u:[],t:Date.now()};
+try{const r=JSON.parse(localStorage.getItem(KEY));if(r&&Array.isArray(r.b)&&r.b.length===B.length&&Array.isArray(r.u))s=Object.assign(s,r)}catch(e){}
+let boost=0,sig="";
+const has=id=>s.u.includes(id);
+const bm=i=>2**U.filter(u=>u.t==="b"&&u.i===i&&has(u.id)).length;
+const cm=()=>2**U.filter(u=>u.t==="c"&&has(u.id)).length;
+const base=()=>B.reduce((a,b,i)=>a+b[2]*s.b[i]*bm(i),0);
+const dps=()=>base()*(Date.now()<boost?7:1);
+const cost=i=>Math.ceil(B[i][1]*1.15**s.b[i]);
+const gain=()=>cm()*(1+dps()*.01);
+function fmt(n,dec){
+  if(n<1e3)return n.toLocaleString("fr-FR",{maximumFractionDigits:dec||0});
+  for(const[v,x]of[[1e12," Bn"],[1e9," Md"],[1e6," M"],[1e3," k"]])if(n>=v)return(n/v).toLocaleString("fr-FR",{maximumFractionDigits:2})+x;
+}
+function msg(t){$("tk").textContent=t}
+function save(){s.t=Date.now();try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}}
+// DOM de l'équipe
+const rows=B.map((b,i)=>{
+  const e=document.createElement("button");e.className="row";
+  e.innerHTML=`<span class="n">${b[0]}<small>${b[3]}</small></span><span class="c"><span class="own"></span><span class="cost"></span></span>`;
+  e.onclick=()=>{const c=cost(i);if(s.d>=c){s.d-=c;s.b[i]++;upd()}};
+  $("shop").append(e);return e;
+});
+function renderUps(){
+  const a=U.filter(u=>!has(u.id)&&(u.t==="c"?s.tot>=u.cost/4:s.b[u.i]>=u.req)).sort((x,y)=>x.cost-y.cost);
+  const g=a.map(u=>u.id).join();
+  const box=$("ups");
+  if(g!==sig){
+    sig=g;box.innerHTML=a.length?"":'<p class="empty">Rien pour l\'instant. Traitez des dossiers et recrutez.</p>';
+    a.forEach(u=>{
+      const e=document.createElement("button");e.className="up";e.dataset.id=u.id;
+      e.innerHTML=`<b>${u.n}</b><small>${u.d}</small><span>${fmt(u.cost)}</span>`;
+      e.onclick=()=>{if(!has(u.id)&&s.d>=u.cost){s.d-=u.cost;s.u.push(u.id);upd()}};
+      box.append(e);
+    });
+  }
+  box.querySelectorAll(".up").forEach(e=>{e.disabled=s.d<U.find(u=>u.id===e.dataset.id).cost});
+}
+function upd(){
+  const dp=dps(),d=Math.floor(s.d);
+  $("d").textContent=fmt(d);$("r").textContent=fmt(dp,1);
+  $("pc").textContent=fmt(gain(),1);$("tt").textContent=fmt(Math.floor(s.tot));
+  const left=Math.ceil((boost-Date.now())/1000);
+  $("bo").hidden=left<=0;if(left>0)$("bo").textContent=" (×7 encore "+left+" s)";
+  rows.forEach((e,i)=>{const c=cost(i);e.querySelector(".own").textContent=s.b[i];e.querySelector(".cost").textContent=fmt(c);e.disabled=s.d<c});
+  renderUps();
+  document.title=fmt(d)+" dossiers · Open Space Inc.";
+}
+function fl(x,y,v){
+  const e=document.createElement("span");e.className="fl";e.textContent="+"+fmt(v,1);
+  e.style.left=x+"px";e.style.top=y+"px";document.body.append(e);setTimeout(()=>e.remove(),900);
+}
+$("clk").onclick=e=>{
+  const g=gain();s.d+=g;s.tot+=g;s.clicks++;
+  const r=e.currentTarget.getBoundingClientRect();
+  fl(e.detail?e.clientX:r.left+r.width/2,e.detail?e.clientY:r.top,g);upd();
+};
+// Réunion annulée : bonus aléatoire
+let hideT;
+function spawn(){
+  const b=$("evt");b.style.left=(4+Math.random()*58)+"%";b.style.top=(12+Math.random()*68)+"%";b.hidden=false;
+  clearTimeout(hideT);hideT=setTimeout(()=>{b.hidden=true},12000);
+}
+function sched(){setTimeout(()=>{spawn();sched()},45000+Math.random()*45000)}
+$("evt").onclick=()=>{$("evt").hidden=true;boost=Date.now()+15000;msg("Réunion annulée ! Production ×7 pendant 15 secondes.");upd()};
+// Remise à zéro (double clic de confirmation)
+let rc=0;
+$("rs").onclick=()=>{
+  const b=$("rs");
+  if(!rc){b.textContent="Confirmer : tout effacer ?";rc=setTimeout(()=>{rc=0;b.textContent="Recommencer à zéro"},4000);return}
+  clearTimeout(rc);rc=0;b.textContent="Recommencer à zéro";
+  s.d=0;s.tot=0;s.clicks=0;s.b=B.map(()=>0);s.u=[];boost=0;sig="";save();upd();msg("Nouveau départ. Bienvenue chez Open Space Inc.");
+};
+// Progression hors-ligne (50 %, 4 h max)
+const el=Math.min((Date.now()-s.t)/1000,14400);
+if(el>60&&base()>0){const g=el*base()*.5;s.d+=g;s.tot+=g;msg(`Pendant votre absence (${Math.round(el/60)} min), l'équipe a traité ${fmt(Math.floor(g))} dossiers.`)}
+let last=Date.now();
+setInterval(()=>{const n=Date.now(),dt=Math.min((n-last)/1000,5);last=n;const g=dps()*dt;s.d+=g;s.tot+=g;upd()},100);
+setInterval(save,10000);
+setInterval(()=>msg(M[Math.floor(Math.random()*M.length)]),9000);
+addEventListener("visibilitychange",()=>{if(document.hidden)save()});
+addEventListener("pagehide",save);
+sched();upd();
+})();
+</script>
+</body>
+</html>
