@@ -81,19 +81,19 @@ h2{margin:0 0 8px;font-size:20px;font-weight:800}
 (()=>{
 const $=id=>document.getElementById(id);
 const B=[
-["Stagiaire",15,.1,"Fait ce qu'on lui demande, parfois même bien."],
-["Assistant(e)",100,1,"Sait où est tout. Absolument tout."],
-["Chargé de compte",1100,8,"Transforme un mail en rendez-vous."],
-["Machine à café",12000,47,"Carburant officiel de l'open space."],
-["Chef de projet",130000,260,"Planifie la réunion qui prépare la réunion."],
-["Consultant externe",1400000,1400,"Facture au TJM, livre en slides."],
-["Direction",20000000,7800,"Valide à 17 h 59, un vendredi."],
-["Siège social",330000000,44000,"Trois étages et un baby-foot."]];
+["Stagiaire du Lab",15,.1,"Fait ce qu'on lui demande, parfois même bien."],
+["Alternant du Lab",100,1,"Chef de Projet moins bien payé."],
+["Chef de projet",1100,8,"Samuel Etienne est dispo."],
+["Chef de Pub",12000,47,"On se demande toujours ce qu'il fait dans cette boîte."],
+["Directeur de Clientèle",130000,260,"Parti en dej client."],
+["Sylvain Roy",1400000,1400,"Pilote de scooter pro"],
+["Fred Jonquet",20000000,7800,"Le sport c'est la vie."],
+["Marianne",330000000,44000,"La Boss en fait."]];
 const UN=[["Tutoriel de 3 pages","Badge « presque salarié »"],["Agenda partagé","Raccourci Ctrl+Entrée"],["CRM mis à jour","Déjeuner client"],["Dosette premium","Lait d'avoine"],["Rétroplanning","Post-it sur tous les murs"],["Slides de 400 pages","Facture en TJM"],["Séminaire à Marrakech","Le mot « synergie »"],["Tour de verre","Baby-foot à étage"]];
 const U=[];
-["Souris ergonomique","Deuxième écran","Raccourcis clavier","Casque anti-bruit","Chaise ergonomique"].forEach((n,k)=>U.push({id:"c"+k,n,t:"c",cost:100*10**k,d:"Clics ×2"}));
+["Badge FTP","Afterwork de la com'","Plénière commerciale","Semaine de CGV","Vendredi c'est TT"].forEach((n,k)=>U.push({id:"c"+k,n,t:"c",cost:100*10**k,d:"Clics ×2"}));
 B.forEach((b,i)=>[[5,10],[25,1500]].forEach(([req,m],k)=>U.push({id:"b"+i+"_"+k,n:UN[i][k],t:"b",i,req,cost:b[1]*m,d:b[0]+" ×2"})));
-const M=["Maryse a fait un sourire.","« On fait un point rapide ? » Il dure 55 minutes.","Jules a envoyé le menu de la cantine. Val râle encore","On a un brief mais on n'a pas de budget.","Un collègue répond « à tous » pour dire merci.","Il reste un seul post-it. Personne ne veut le prendre.","La clim est trop froide. Ou trop chaude. Jamais entre les deux.","Cette réunion aurait pu être un mail. Elle l'est devenue.","Quelqu'un a posé son sac sur la chaise d'à côté.","Le Wi-Fi tient bon. Pour l'instant.","Ordre du jour : l'ordre du jour.","Y a des fruits à la tisanière !"];
+const M=["Maryse a fait un sourire.","« On fait un point rapide ? » Il dure 55 minutes.","Jules a envoyé le menu de la cantine. Val râle encore","On a un brief mais on n'a pas de budget.","Thierry demande où est la télécommande de la clim.","Pause de 10h à la tisanière. Se termine à 11h30","La clim est trop froide. Ou trop chaude. Jamais entre les deux.","Cette réunion aurait pu être un mail. Elle l'est devenue.","Concours de gâteau : Loane a tout donné.","Le Wi-Fi tient bon. Pour l'instant.","Ordre du jour : l'ordre du jour.","Y a des fruits à la tisanière !"];
 const KEY="openspace-inc-v1";
 let s={d:0,tot:0,clicks:0,b:B.map(()=>0),u:[],t:Date.now()};
 try{const r=JSON.parse(localStorage.getItem(KEY));if(r&&Array.isArray(r.b)&&r.b.length===B.length&&Array.isArray(r.u))s=Object.assign(s,r)}catch(e){}
